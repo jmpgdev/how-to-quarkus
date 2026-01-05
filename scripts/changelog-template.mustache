@@ -1,0 +1,117 @@
+# Changelog
+
+All notable changes to the Event Management API project will be documented in this file.
+
+The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
+and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+
+## [Unreleased]
+{{#tags}}
+{{#ifReleaseTag .}}
+
+## [{{name}}] - {{tagDate}}
+{{#ifContainsType commits type='feat'}}
+
+### ✨ Features
+{{#commits}}
+{{#ifCommitType . type='feat'}}
+- {{#messageTitle}}{{.}}{{/messageTitle}}{{#messageBodyItems}} {{.}}{{/messageBodyItems}} ([{{hash}}](https://github.com/yourusername/how-to-quarkus/commit/{{hash}})){{#hasIssue}} ({{#issues}}[#{{issue}}]({{link}}){{/issues}}){{/hasIssue}}
+{{/ifCommitType}}
+{{/commits}}
+{{/ifContainsType}}
+{{#ifContainsType commits type='fix'}}
+
+### 🐛 Bug Fixes
+{{#commits}}
+{{#ifCommitType . type='fix'}}
+- {{#messageTitle}}{{.}}{{/messageTitle}}{{#messageBodyItems}} {{.}}{{/messageBodyItems}} ([{{hash}}](https://github.com/yourusername/how-to-quarkus/commit/{{hash}})){{#hasIssue}} ({{#issues}}[#{{issue}}]({{link}}){{/issues}}){{/hasIssue}}
+{{/ifCommitType}}
+{{/commits}}
+{{/ifContainsType}}
+{{#ifContainsType commits type='perf'}}
+
+### ⚡ Performance Improvements
+{{#commits}}
+{{#ifCommitType . type='perf'}}
+- {{#messageTitle}}{{.}}{{/messageTitle}}{{#messageBodyItems}} {{.}}{{/messageBodyItems}} ([{{hash}}](https://github.com/yourusername/how-to-quarkus/commit/{{hash}})){{#hasIssue}} ({{#issues}}[#{{issue}}]({{link}}){{/issues}}){{/hasIssue}}
+{{/ifCommitType}}
+{{/commits}}
+{{/ifContainsType}}
+{{#ifContainsType commits type='docs'}}
+
+### 📝 Documentation
+{{#commits}}
+{{#ifCommitType . type='docs'}}
+- {{#messageTitle}}{{.}}{{/messageTitle}}{{#messageBodyItems}} {{.}}{{/messageBodyItems}} ([{{hash}}](https://github.com/yourusername/how-to-quarkus/commit/{{hash}})){{#hasIssue}} ({{#issues}}[#{{issue}}]({{link}}){{/issues}}){{/hasIssue}}
+{{/ifCommitType}}
+{{/commits}}
+{{/ifContainsType}}
+{{#ifContainsType commits type='refactor'}}
+
+### ♻️ Code Refactoring
+{{#commits}}
+{{#ifCommitType . type='refactor'}}
+- {{#messageTitle}}{{.}}{{/messageTitle}}{{#messageBodyItems}} {{.}}{{/messageBodyItems}} ([{{hash}}](https://github.com/yourusername/how-to-quarkus/commit/{{hash}})){{#hasIssue}} ({{#issues}}[#{{issue}}]({{link}}){{/issues}}){{/hasIssue}}
+{{/ifCommitType}}
+{{/commits}}
+{{/ifContainsType}}
+{{#ifContainsType commits type='test'}}
+
+### ✅ Tests
+{{#commits}}
+{{#ifCommitType . type='test'}}
+- {{#messageTitle}}{{.}}{{/messageTitle}}{{#messageBodyItems}} {{.}}{{/messageBodyItems}} ([{{hash}}](https://github.com/yourusername/how-to-quarkus/commit/{{hash}})){{#hasIssue}} ({{#issues}}[#{{issue}}]({{link}}){{/issues}}){{/hasIssue}}
+{{/ifCommitType}}
+{{/commits}}
+{{/ifContainsType}}
+{{#ifContainsType commits type='build'}}
+
+### 🏗️ Build System
+{{#commits}}
+{{#ifCommitType . type='build'}}
+- {{#messageTitle}}{{.}}{{/messageTitle}}{{#messageBodyItems}} {{.}}{{/messageBodyItems}} ([{{hash}}](https://github.com/yourusername/how-to-quarkus/commit/{{hash}})){{#hasIssue}} ({{#issues}}[#{{issue}}]({{link}}){{/issues}}){{/hasIssue}}
+{{/ifCommitType}}
+{{/commits}}
+{{/ifContainsType}}
+{{#ifContainsType commits type='ci'}}
+
+### 👷 Continuous Integration
+{{#commits}}
+{{#ifCommitType . type='ci'}}
+- {{#messageTitle}}{{.}}{{/messageTitle}}{{#messageBodyItems}} {{.}}{{/messageBodyItems}} ([{{hash}}](https://github.com/yourusername/how-to-quarkus/commit/{{hash}})){{#hasIssue}} ({{#issues}}[#{{issue}}]({{link}}){{/issues}}){{/hasIssue}}
+{{/ifCommitType}}
+{{/commits}}
+{{/ifContainsType}}
+{{#ifContainsType commits type='chore'}}
+
+### 🔧 Miscellaneous
+{{#commits}}
+{{#ifCommitType . type='chore'}}
+- {{#messageTitle}}{{.}}{{/messageTitle}}{{#messageBodyItems}} {{.}}{{/messageBodyItems}} ([{{hash}}](https://github.com/yourusername/how-to-quarkus/commit/{{hash}})){{#hasIssue}} ({{#issues}}[#{{issue}}]({{link}}){{/issues}}){{/hasIssue}}
+{{/ifCommitType}}
+{{/commits}}
+{{/ifContainsType}}
+{{#ifContainsBreakingChanges}}
+
+### 💥 BREAKING CHANGES
+{{#commits}}
+{{#ifCommitHasFooters .}}
+{{#messageFooters}}
+{{#ifMatches footer "BREAKING CHANGE.*"}}
+- **{{../../messageTitle}}**: {{footer}}
+{{/ifMatches}}
+{{/messageFooters}}
+{{/ifCommitHasFooters}}
+{{/commits}}
+{{/ifContainsBreakingChanges}}
+{{/ifReleaseTag}}
+{{/tags}}
+
+---
+
+[Unreleased]: https://github.com/yourusername/how-to-quarkus/compare/{{#tags}}{{#ifReleaseTag .}}{{name}}{{/ifReleaseTag}}{{/tags}}...HEAD
+{{#tags}}
+{{#ifReleaseTag .}}
+[{{name}}]: https://github.com/yourusername/how-to-quarkus/releases/tag/{{name}}
+{{/ifReleaseTag}}
+{{/tags}}

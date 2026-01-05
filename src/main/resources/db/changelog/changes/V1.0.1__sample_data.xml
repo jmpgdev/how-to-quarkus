@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <!--
+        Sample Data for Development and Testing
+        Version: 1.0.1
+        Description: Inserts sample events for development and testing purposes
+        Note: This data should only be loaded in dev/test environments
+    -->
+
+    <changeSet id="sample-data-1" author="event-management-team" context="dev,test">
+        <comment>Insert sample events for development and testing</comment>
+
+        <insert tableName="events">
+            <column name="id" valueNumeric="1"/>
+            <column name="title" value="Tech Conference 2026"/>
+            <column name="description"
+                    value="Annual technology conference featuring the latest innovations in AI and Cloud Computing"/>
+            <column name="location" value="San Francisco Convention Center"/>
+            <column name="startDate" valueDate="2026-03-15T09:00:00"/>
+            <column name="endDate" valueDate="2026-03-17T18:00:00"/>
+            <column name="capacity" valueNumeric="500"/>
+            <column name="availableSeats" valueNumeric="450"/>
+            <column name="status" value="SCHEDULED"/>
+            <column name="createdAt" valueComputed="CURRENT_TIMESTAMP"/>
+            <column name="updatedAt" valueComputed="CURRENT_TIMESTAMP"/>
+        </insert>
+
+        <insert tableName="events">
+            <column name="id" valueNumeric="2"/>
+            <column name="title" value="Java User Group Meetup"/>
+            <column name="description"
+                    value="Monthly meetup for Java developers to discuss best practices and new features"/>
+            <column name="location" value="Tech Hub Downtown"/>
+            <column name="startDate" valueDate="2026-02-20T18:00:00"/>
+            <column name="endDate" valueDate="2026-02-20T21:00:00"/>
+            <column name="capacity" valueNumeric="50"/>
+            <column name="availableSeats" valueNumeric="30"/>
+            <column name="status" value="SCHEDULED"/>
+            <column name="createdAt" valueComputed="CURRENT_TIMESTAMP"/>
+            <column name="updatedAt" valueComputed="CURRENT_TIMESTAMP"/>
+        </insert>
+
+        <insert tableName="events">
+            <column name="id" valueNumeric="3"/>
+            <column name="title" value="Quarkus Workshop"/>
+            <column name="description"
+                    value="Hands-on workshop covering Quarkus fundamentals and reactive programming"/>
+            <column name="location" value="Online"/>
+            <column name="startDate" valueDate="2026-02-10T14:00:00"/>
+            <column name="endDate" valueDate="2026-02-10T17:00:00"/>
+            <column name="capacity" valueNumeric="100"/>
+            <column name="availableSeats" valueNumeric="75"/>
+            <column name="status" value="SCHEDULED"/>
+            <column name="createdAt" valueComputed="CURRENT_TIMESTAMP"/>
+            <column name="updatedAt" valueComputed="CURRENT_TIMESTAMP"/>
+        </insert>
+
+        <insert tableName="events">
+            <column name="id" valueNumeric="4"/>
+            <column name="title" value="DevOps Summit"/>
+            <column name="description"
+                    value="Summit focusing on DevOps practices, CI/CD, and cloud-native technologies"/>
+            <column name="location" value="Austin Tech Center"/>
+            <column name="startDate" valueDate="2026-04-05T08:00:00"/>
+            <column name="endDate" valueDate="2026-04-06T17:00:00"/>
+            <column name="capacity" valueNumeric="300"/>
+            <column name="availableSeats" valueNumeric="250"/>
+            <column name="status" value="SCHEDULED"/>
+            <column name="createdAt" valueComputed="CURRENT_TIMESTAMP"/>
+            <column name="updatedAt" valueComputed="CURRENT_TIMESTAMP"/>
+        </insert>
+
+        <insert tableName="events">
+            <column name="id" valueNumeric="5"/>
+            <column name="title" value="Past Conference Example"/>
+            <column name="description" value="An example of a completed conference"/>
+            <column name="location" value="Virtual Event"/>
+            <column name="startDate" valueDate="2025-12-01T10:00:00"/>
+            <column name="endDate" valueDate="2025-12-01T16:00:00"/>
+            <column name="capacity" valueNumeric="200"/>
+            <column name="availableSeats" valueNumeric="0"/>
+            <column name="status" value="COMPLETED"/>
+            <column name="createdAt" valueComputed="CURRENT_TIMESTAMP"/>
+            <column name="updatedAt" valueComputed="CURRENT_TIMESTAMP"/>
+        </insert>
+
+        <rollback>
+            <delete tableName="events">
+                <where>id IN (1, 2, 3, 4, 5)</where>
+            </delete>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="sample-data-2" author="event-management-team" context="dev,test" dbms="postgresql">
+        <comment>Update PostgreSQL sequence after inserting sample data</comment>
+
+        <sql>
+            SELECT setval('events_SEQ', (SELECT MAX(id) FROM events) + 1);
+        </sql>
+
+        <rollback>
+            <sql>
+                SELECT setval('events_SEQ', 1);
+            </sql>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="sample-data-3" author="event-management-team" context="dev,test" dbms="h2">
+        <comment>Update H2 sequence after inserting sample data</comment>
+
+        <sql>
+            ALTER SEQUENCE events_SEQ RESTART WITH 6;
+        </sql>
+
+        <rollback>
+            <sql>
+                ALTER SEQUENCE events_SEQ RESTART WITH 1;
+            </sql>
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>

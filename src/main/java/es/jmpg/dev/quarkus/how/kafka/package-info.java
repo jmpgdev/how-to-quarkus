@@ -1,0 +1,1 @@
+package es.jmpg.dev.quarkus.how.kafka;

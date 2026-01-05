@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+        xmlns:pro="http://www.liquibase.org/xml/ns/pro"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd
+        http://www.liquibase.org/xml/ns/dbchangelog-ext
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd
+        http://www.liquibase.org/xml/ns/pro
+        http://www.liquibase.org/xml/ns/pro/liquibase-pro-latest.xsd">
+
+    <!--
+        Master Changelog File
+
+        This file orchestrates all database changes in sequential order.
+        Each include should reference a specific migration file.
+
+        Naming Convention:
+        - Version based: V{version}__{description}.xml (e.g., V1.0.0__initial_schema.xml)
+        - Timestamp based: {timestamp}_{description}.xml (e.g., 20260105_initial_schema.xml)
+
+        Best Practices:
+        - Never modify a changelog that has been applied to production
+        - Create new changesets for schema modifications
+        - Use meaningful IDs and author information
+        - Include rollback instructions when possible
+    -->
+
+    <!-- Version 1.0.0 - Initial Database Schema -->
+    <include file="db/changelog/changes/V1.0.0__initial_schema.xml"/>
+
+    <!-- Version 1.0.1 - Initial Sample Data -->
+    <include file="db/changelog/changes/V1.0.1__sample_data.xml"/>
+
+    <!-- Future migrations will be added here -->
+    <!-- <include file="db/changelog/changes/V1.1.0__add_event_categories.xml"/> -->
+
+</databaseChangeLog>

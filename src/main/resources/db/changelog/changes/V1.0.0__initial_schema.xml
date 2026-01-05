@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <!--
+        Initial Database Schema
+        Version: 1.0.0
+        Description: Creates the events table with all necessary columns and constraints
+    -->
+
+    <changeSet id="1" author="event-management-team">
+        <comment>Create events table for storing event information</comment>
+
+        <createTable tableName="events">
+            <!-- Primary Key -->
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+
+            <!-- Event Basic Information -->
+            <column name="title" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="description" type="VARCHAR(1000)">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="location" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+
+            <!-- Event Dates -->
+            <column name="startDate" type="TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="endDate" type="TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+
+            <!-- Capacity Management -->
+            <column name="capacity" type="INTEGER">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="availableSeats" type="INTEGER">
+                <constraints nullable="false"/>
+            </column>
+
+            <!-- Event Status -->
+            <column name="status" type="VARCHAR(20)" defaultValue="SCHEDULED">
+                <constraints nullable="false"/>
+            </column>
+
+            <!-- Audit Timestamps -->
+            <column name="createdAt" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="updatedAt" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <rollback>
+            <dropTable tableName="events"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="2" author="event-management-team">
+        <comment>Create index on event status for better query performance</comment>
+
+        <createIndex tableName="events" indexName="idx_events_status">
+            <column name="status"/>
+        </createIndex>
+
+        <rollback>
+            <dropIndex tableName="events" indexName="idx_events_status"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="3" author="event-management-team">
+        <comment>Create index on event dates for date-based queries</comment>
+
+        <createIndex tableName="events" indexName="idx_events_dates">
+            <column name="startDate"/>
+            <column name="endDate"/>
+        </createIndex>
+
+        <rollback>
+            <dropIndex tableName="events" indexName="idx_events_dates"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="4" author="event-management-team">
+        <comment>Add check constraint to ensure end date is after start date</comment>
+
+        <sql>
+            ALTER TABLE events
+                ADD CONSTRAINT chk_event_dates CHECK ("endDate" > "startDate");
+        </sql>
+
+        <rollback>
+            <sql>
+                ALTER TABLE events DROP CONSTRAINT chk_event_dates;
+            </sql>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="5" author="event-management-team">
+        <comment>Add check constraint to ensure capacity is positive</comment>
+
+        <sql>
+            ALTER TABLE events
+                ADD CONSTRAINT chk_event_capacity CHECK (capacity > 0);
+        </sql>
+
+        <rollback>
+            <sql>
+                ALTER TABLE events DROP CONSTRAINT chk_event_capacity;
+            </sql>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="6" author="event-management-team" dbms="postgresql">
+        <comment>Create sequence for events table (PostgreSQL specific)</comment>
+
+        <createSequence sequenceName="events_SEQ" startValue="1" incrementBy="50"/>
+
+        <rollback>
+            <dropSequence sequenceName="events_SEQ"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="7" author="event-management-team" dbms="h2">
+        <comment>Create sequence for events table (H2 specific)</comment>
+
+        <createSequence sequenceName="events_SEQ" startValue="1" incrementBy="50"/>
+
+        <rollback>
+            <dropSequence sequenceName="events_SEQ"/>
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>

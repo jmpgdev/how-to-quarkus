@@ -1,0 +1,16 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(tree:*)",
+      "Bash(dir:*)",
+      "Bash(mvn versions:set:*)",
+      "Bash(.gradlew.bat --version)",
+      "Bash(./gradlew:*)",
+      "Bash(curl:*)",
+      "Bash(java -version:*)",
+      "Bash(echo:*)",
+      "WebSearch",
+      "Bash(gradlew clean:*)"
+    ]
+  }
+}
